@@ -2,7 +2,7 @@
 
 use App\Http\Middleware\CheckMemberLogin;
 use Illuminate\Support\Facades\Route;
-
+//front User
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'index']
 );
 Route::prefix('shop')->group(function () {
@@ -22,8 +22,6 @@ Route::prefix('cart')->group(function () {
     Route::get('delete', [\App\Http\Controllers\Front\CartController::class, 'delete']);
     Route::get('destroy', [\App\Http\Controllers\Front\CartController::class, 'destroy']);
     Route::get('update', [\App\Http\Controllers\Front\CartController::class, 'update']);
-
-
 });
 
 Route::prefix('checkout')->group(function () {
@@ -44,4 +42,11 @@ Route::prefix('account')->group(function () {
         Route::get('/',[\App\Http\Controllers\Front\AccountController::class, 'myOrderIndex']);
         Route::get('{id}',[\App\Http\Controllers\Front\AccountController::class, 'myOrderShow']);
     });
+});
+
+
+//Dashboard Admin
+
+Route::prefix('admin')->group(function () {
+   Route::resource('user',\App\Http\Controllers\Admin\UserController::class);
 });
