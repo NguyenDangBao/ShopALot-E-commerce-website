@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -38,20 +38,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        if ($request->get('password') != $request->get('password_confirmation')) {
-//
-//            return back()
-//                ->with('notification', 'ERROR: Confirm password does not match');
-//
-//        }
-//
-//
-//        $data = $request->all();
-//        $data['password'] = bcrypt($request->get(key: 'password'));
-//
-//        $user = $this->userService->create($data);
-//
-//        return redirect('admin/user/' . $user->id);
+        if ($request->get('password') != $request->get('password_confirmation')) {
+
+            return back()
+                ->with('notification', 'ERROR: Confirm password does not match');
+
+        }
+
+
+        $data = $request->all();
+        $data['password'] = bcrypt($request->get('password'));
+
+        $user = $this->userService->create($data);
+
+        return redirect('admin/user/' . $user->id);
     }
 
     /**
@@ -59,6 +59,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+
+
         return view('admin.user.show',compact('user'));
     }
 
