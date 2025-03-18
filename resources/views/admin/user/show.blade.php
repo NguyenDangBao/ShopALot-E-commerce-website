@@ -113,7 +113,7 @@
                                         <label for="town_city" class="col-md-3 text-md-right col-form-label">
                                             Town City</label>
                                         <div class="col-md-9 col-xl-8">
-                                            <p>{{$user->town}}</p>
+                                            <p>{{$user->town_city}}</p>
                                         </div>
                                     </div>
 
