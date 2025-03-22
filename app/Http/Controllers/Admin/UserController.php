@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
+use App\Utilities\common;
 use Illuminate\Http\Request;
-
 class UserController extends Controller
 {
 
@@ -48,6 +48,10 @@ class UserController extends Controller
 
         $data = $request->all();
         $data['password'] = bcrypt($request->get('password'));
+        // xử lý file
+        if($request->hasFile('image')){
+            $data['avatar']=Common::uploadFile($request->file('image'),'front/img/user');
+        }
 
         $user = $this->userService->create($data);
 
@@ -69,7 +73,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user.edit',compact('user'));
     }
 
     /**
@@ -77,7 +81,37 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
+        $data = $request->all();
+        //xử lí mật khẩu (mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu)
+        if($request->get('password') != null) {
+            if ($request->get('password') != $request->get('password_confirmation')) {
+                return back()
+                    ->with('notification', 'ERROR: Confirm password does not match');
+            }
+
+            $data['password'] = bcrypt($request->get('password'));
+
+        }else {
+            unset($data['password']);
+        }
+
+        //xử lí file ảnh
+
+        if($request->hasFile('image')){
+            //thêm file mới
+            $data['avatar']=Common::uploadFile($request->file('image'),'front/img/user');
+        }
+        //xóa file cũ
+
+        $file_name_old = $request->get('image_old');
+        if($file_name_old != "") {
+            unlink('front/img/user/' . $file_name_old);
+        }
+
+        //cập nhật dữ liệu
+        $this->userService->update($data, $user->id);
+        return redirect('admin/user/' . $user->id);
     }
 
     /**
@@ -85,6 +119,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $this -> userService->delete($user->id);
+
+        // xoa file
+        $file_name   = $user->avatar;
+        if($file_name != "") {
+            unlink('front/img/user/' . $file_name);
+        }
+        return redirect('admin/user');
     }
 }
