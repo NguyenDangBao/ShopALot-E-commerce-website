@@ -12,6 +12,10 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'id';  // Xác định khóa chính là 'id'
+    public $incrementing = true;   // ID tự động tăng
+    protected $keyType = 'int';    // ID là kiểu số nguyên
+
     /**
      * The attributes that are mass assignable.
      *
