@@ -39,12 +39,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if ($request->get('password') != $request->get('password_confirmation')) {
-
             return back()
                 ->with('notification', 'ERROR: Confirm password does not match');
-
         }
-
 
         $data = $request->all();
         $data['password'] = bcrypt($request->get('password'));
@@ -63,8 +60,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
-
         return view('admin.user.show',compact('user'));
     }
 
@@ -81,7 +76,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
         $data = $request->all();
         //xử lí mật khẩu (mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu)
         if($request->get('password') != null) {
@@ -89,24 +83,23 @@ class UserController extends Controller
                 return back()
                     ->with('notification', 'ERROR: Confirm password does not match');
             }
-
             $data['password'] = bcrypt($request->get('password'));
-
         }else {
             unset($data['password']);
         }
 
         //xử lí file ảnh
-
         if($request->hasFile('image')){
             //thêm file mới
             $data['avatar']=Common::uploadFile($request->file('image'),'front/img/user');
-        }
-        //xóa file cũ
 
-        $file_name_old = $request->get('image_old');
-        if($file_name_old != "") {
-            unlink('front/img/user/' . $file_name_old);
+            //xóa file cũ nếu có
+            if($user->avatar && file_exists(public_path($user->avatar))) {
+                unlink(public_path($user->avatar));
+            }
+        } else {
+            // Nếu không tải ảnh mới, giữ nguyên ảnh cũ
+            $data['avatar'] = $user->avatar;
         }
 
         //cập nhật dữ liệu
@@ -121,10 +114,9 @@ class UserController extends Controller
     {
         $this -> userService->delete($user->id);
 
-        // xoa file
-        $file_name   = $user->avatar;
-        if($file_name != "") {
-            unlink('front/img/user/' . $file_name);
+        // xóa file
+        if($user->avatar && file_exists(public_path($user->avatar))) {
+            unlink(public_path($user->avatar));
         }
         return redirect('admin/user');
     }
