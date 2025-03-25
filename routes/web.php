@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckAdminLogin;
 use App\Http\Middleware\CheckMemberLogin;
 use Illuminate\Support\Facades\Route;
 //front User
@@ -38,7 +39,7 @@ Route::prefix('account')->group(function () {
     Route::get('register', [\App\Http\Controllers\Front\AccountController::class, 'register']);
     Route::post('register', [\App\Http\Controllers\Front\AccountController::class, 'postRegister']);
 
-    Route::prefix('my-order')->middleware(CheckMemberLogin::class)->group(function(){
+        Route::prefix('my-order')->middleware(CheckMemberLogin::class)->group(function(){
         Route::get('/',[\App\Http\Controllers\Front\AccountController::class, 'myOrderIndex']);
         Route::get('{id}',[\App\Http\Controllers\Front\AccountController::class, 'myOrderShow']);
     });
@@ -47,6 +48,12 @@ Route::prefix('account')->group(function () {
 
 //Dashboard Admin
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(CheckAdminLogin::class)->group(function () {
+    Route::redirect('', 'admin/user');
    Route::resource('user',\App\Http\Controllers\Admin\UserController::class);
+   Route::prefix('login')->group(function () {
+       Route::get('',[\App\Http\Controllers\Admin\HomeController::class, 'getLogin'])->withoutMiddleware(CheckAdminLogin::class);
+       Route::post('',[\App\Http\Controllers\Admin\HomeController::class, 'postLogin'])->withoutMiddleware(CheckAdminLogin::class);
+   });
+   Route::get('logout',[\App\Http\Controllers\Admin\HomeController::class, 'logout']);
 });
