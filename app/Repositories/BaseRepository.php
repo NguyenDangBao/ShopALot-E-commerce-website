@@ -47,4 +47,12 @@ namespace App\Repositories;
 
         return $object->delete();
     }
+    public function searchAndPaginate($searchBy, $keyword ,$perPage = 5)
+    {
+        return $this->model
+            ->where('name','like','%'.$keyword.'%')
+            ->orderBy('id','desc')
+            ->paginate($perPage)
+            ->appends(['search' => $keyword]);
+    }
 }
