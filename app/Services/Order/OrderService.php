@@ -20,4 +20,9 @@ class OrderService extends BaseService implements OrderServiceInterface
     {
         return $this->repository->getOrderByUserId($userId);
     }
+    public function searchAndPaginate($searchKey, $searchValue, $perPage = 5)
+    {
+        return $this->repository->searchAndPaginate($searchKey, $searchValue, $perPage);
+    }
+
 }
