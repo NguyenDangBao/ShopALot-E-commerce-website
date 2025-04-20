@@ -53,7 +53,7 @@
                         <label for="brand_id"
                                class="col-md-3 text-md-right col-form-label">Product Details</label>
                         <div class="col-md-9 col-xl-8">
-                            <p><a href="./product-detail.html">Manage details</a></p>
+                            <p><a href="./admin/product/{{$product->id}}/detail">Manage details</a></p>
                         </div>
                     </div>
 
