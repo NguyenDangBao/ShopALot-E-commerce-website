@@ -18,4 +18,9 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->where('user_id', $userId)
             ->get();
     }
+    public function searchAndPaginate($searchKey, $searchValue, $perPage = 5)
+    {
+        return $this->model->where($searchKey, 'like', '%' . $searchValue . '%')->paginate($perPage);
+    }
+
 }
