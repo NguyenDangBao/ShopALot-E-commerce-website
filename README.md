@@ -135,7 +135,7 @@ ShopALot is built using a modern tech stack:
 ## 👨‍💻 Author
 
 **Nguyen Dang Bao**
-- GitHub: [github.com/yourusername](https://github.com/yourusername)
+- GitHub: [github.com/NguyenDangBao](https://github.com/NguyenDangBao)
 - Email: brendanbao12@gmail.com
 
 ## 📄 License
@@ -145,5 +145,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  © 2023 ShopALot. All Rights Reserved.
+  © 2025 ShopALot. All Rights Reserved.
 </div>
