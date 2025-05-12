@@ -46,16 +46,6 @@ ShopALot is built using a modern tech stack:
 - **Payment Integration**: RESTful API connections to payment gateways
 - **Security**: CSRF protection, data encryption, secure authentication
 
-## 📸 Screenshots
-
-<div align="center">
-  <img src="screenshots/homepage.png" alt="Homepage" width="45%">
-  <img src="screenshots/product-page.png" alt="Product Page" width="45%">
-  <br>
-  <img src="screenshots/ai-chatbot.png" alt="AI Chatbot" width="45%">
-  <img src="screenshots/admin-dashboard.png" alt="Admin Dashboard" width="45%">
-</div>
-
 ## 🚦 Getting Started
 
 ### Prerequisites
