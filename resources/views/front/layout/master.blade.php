@@ -8,6 +8,7 @@
     <meta name="keywords" content="ShopAlot, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield("title") | ShopALot</title>
 
     <!-- Google Font -->
@@ -192,7 +193,7 @@
                             <li><a href="">Kid's</a></li>
                         </ul>
                     </li>
-                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="./blog">Blog</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="">Pages</a>
                         <ul class="dropdown">
@@ -323,6 +324,24 @@
             </div>
         </div>
     </div>
+    <!-- Chatbox Component -->
+    <button id="toggle-chat-btn">💬</button>
+    <div id="chatbox-container">
+        <!-- Tiêu đề của Chatbox -->
+        <div id="chatbox-header">
+            <span>Chat with us!</span>
+        </div>
+
+        <!-- Chat Log -->
+        <div id="chat-log"></div>
+
+        <!-- Form nhập câu hỏi -->
+        <form id="chat-form">
+            <input type="text" id="user-query" placeholder="Ask a question..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
 </footer>
 
 
@@ -342,6 +361,153 @@
 <script src="front/js/owl.carousel.min.js"></script>
 <script src="front/js/owlcarousel2-filter.min.js"></script>
 <script src="front/js/main.js"></script>
+<script>
+
+    // Lấy các phần tử
+    const chatbox = document.getElementById('chatbox-container');
+    const toggleChatBtn = document.getElementById('toggle-chat-btn');
+    let currentUserId = null;
+    let lastCheckedUserId = null;
+
+    // Thêm sự kiện khi nhấn nút chatbox
+    toggleChatBtn.addEventListener('click', function() {
+        // Kiểm tra trạng thái hiện tại của chatbox và thay đổi display
+        if (chatbox.style.display === 'none' || chatbox.style.display === '') {
+            chatbox.style.display = 'block';  // Hiển thị chatbox
+            toggleChatBtn.innerHTML = '❌';   // Thay đổi nút thành icon đóng (x)
+            chatbox.classList.remove('small'); // Bỏ class 'small' khi mở chatbox
+        } else {
+            chatbox.style.display = 'none';  // Ẩn chatbox
+            toggleChatBtn.innerHTML = '💬';   // Thay đổi nút thành icon chat (💬)
+            chatbox.classList.add('small');  // Thêm class 'small' khi thu nhỏ chatbox
+        }
+    });
+
+    // Function to check current user and handle chat history
+    function checkCurrentUser() {
+        fetch('/get-current-user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Compare with previous user ID
+                if (lastCheckedUserId !== null && lastCheckedUserId !== data.userId) {
+                    // User changed - clear chat history
+                    document.getElementById('chat-log').innerHTML = '';
+                    localStorage.removeItem('chatlog');
+                    console.log('Chat history cleared - user changed');
+                }
+
+                // Update current user ID
+                currentUserId = data.userId;
+                lastCheckedUserId = data.userId;
+
+                // Load the appropriate chat history
+                loadChatHistory();
+            })
+            .catch(error => {
+                console.error('Error checking user:', error);
+            });
+    }
+
+    // Function to load chat history based on current user
+    function loadChatHistory() {
+        const chatLogKey = currentUserId ? `chatlog_${currentUserId}` : 'chatlog_guest';
+        const savedChatLog = localStorage.getItem(chatLogKey);
+
+        if (savedChatLog) {
+            document.getElementById('chat-log').innerHTML = savedChatLog;
+        } else {
+            document.getElementById('chat-log').innerHTML = '';
+        }
+    }
+
+    // Function to save chat history for current user
+    function saveChatHistory(content) {
+        const chatLogKey = currentUserId ? `chatlog_${currentUserId}` : 'chatlog_guest';
+        localStorage.setItem(chatLogKey, content);
+    }
+
+    // Check user on page load and periodically
+    window.onload = function() {
+        checkCurrentUser();
+        // Check for user changes every 30 seconds
+        setInterval(checkCurrentUser, 30000);
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('chat-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Ngừng hành động mặc định (không làm reload trang)
+
+            const userQuery = document.getElementById('user-query').value;  // Lấy câu hỏi từ người dùng
+            const chatLog = document.getElementById('chat-log');
+
+            // Kiểm tra nếu câu hỏi trống
+            if (!userQuery.trim()) {
+                return;
+            }
+
+            // Hiển thị câu hỏi của người dùng ngay lập tức
+            chatLog.innerHTML += `<strong>You:</strong> ${userQuery}<br>`;
+
+            // Thêm hiệu ứng "đang nhập..."
+            const loadingId = 'loading-' + Date.now();
+            chatLog.innerHTML += `<div id="${loadingId}"><strong>Bot:</strong> <em>Đang xử lý...</em></div>`;
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            // Lấy CSRF token từ thẻ meta
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Gửi câu hỏi tới Laravel route
+            fetch('/ask', {  // Đường dẫn đến route Laravel của bạn
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,  // Thêm CSRF token
+                    'X-Requested-With': 'XMLHttpRequest'  // Để Laravel nhận biết đây là AJAX request
+                },
+                body: JSON.stringify({ question: userQuery }),  // Gửi câu hỏi dưới dạng JSON
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Xóa hiệu ứng "đang nhập..."
+                    document.getElementById(loadingId).remove();
+
+                    // Hiển thị câu trả lời từ bot
+                    chatLog.innerHTML += `<strong>Bot:</strong> ${data.answer}<br><br>`;
+
+                    // Cuộn xuống cuối chatlog để thấy câu trả lời mới nhất
+                    chatLog.scrollTop = chatLog.scrollHeight;
+
+                    // Lưu lại chatlog cho người dùng hiện tại
+                    saveChatHistory(chatLog.innerHTML);
+
+                    // Xóa ô nhập câu hỏi
+                    document.getElementById('user-query').value = '';
+                })
+                .catch(error => {
+                    // Xóa hiệu ứng "đang nhập..."
+                    document.getElementById(loadingId).remove();
+
+                    console.error('Error:', error);  // Nếu có lỗi, in lỗi ra console
+                    chatLog.innerHTML += `<strong>Bot:</strong> <span class="text-danger">Xin lỗi, đã xảy ra lỗi khi xử lý yêu cầu của bạn.</span><br><br>`;
+                    chatLog.scrollTop = chatLog.scrollHeight;
+
+                    // Lưu lại chatlog cho người dùng hiện tại
+                    saveChatHistory(chatLog.innerHTML);
+                });
+        });
+    });
+</script>
 </body>
 
 </html>
