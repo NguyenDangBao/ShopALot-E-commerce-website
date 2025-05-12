@@ -4,7 +4,13 @@ use App\Http\Middleware\CheckAdminLogin;
 use App\Http\Middleware\CheckMemberLogin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\BlogController;
+use App\Http\Controllers\Front\RecommendationController;
+use App\Http\Controllers\Front\ChatboxController;
+
 //front User
+Route::get('/get-current-user', [ChatboxController::class, 'getCurrentUser']);
+Route::get('/get-chat-history', [ChatboxController::class, 'getChatHistory'])->middleware('auth');
+Route::post('/ask', [ChatboxController::class, 'askQuestion'])->name('chatbox.ask');
 Route::prefix('blog')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
@@ -49,6 +55,7 @@ Route::prefix('account')->group(function () {
         Route::get('{id}',[\App\Http\Controllers\Front\AccountController::class, 'myOrderShow']);
     });
 });
+Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
 
 
 //Dashboard Admin
