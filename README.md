@@ -1,70 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# ShopALot: AI-Enhanced E-Commerce Platform
 
 
-📦 [Download the ZIP file](https://github.com/YOUR_USERNAME/YOUR_REPO/releases/latest/download/yourfile.zip)
+## 📌 Overview
 
+ShopALot is a modern, feature-rich e-commerce platform that leverages artificial intelligence to enhance the shopping experience. Developed by Nguyen Dang Bao, this project combines traditional e-commerce functionality with cutting-edge AI features to create a seamless, personalized shopping journey.
+
+## 🚀 Key Features
+
+### AI-Powered Capabilities
+
+- **Intelligent Chatbot**: Real-time customer support through an AI-powered chatbot that can answer product questions, help with navigation, and provide purchase assistance
+- **Smart Product Recommendations**: AI-driven recommendation engine that suggests products based on browsing history, purchase patterns, and user preferences
+- **User-Specific Experience**: Personalized shopping experience with content tailored to individual users and persistent across sessions
+
+### Core E-Commerce Functionality
+
+- **Comprehensive Product Catalog**: Organized by categories with detailed product pages
+- **Shopping Cart System**: Intuitive cart management with real-time updates
+- **User Account Management**: Registration, login, profile management
+- **Order Tracking**: Complete order history and status monitoring
+- **Multi-payment Gateway Integration**: Support for various payment methods including:
+  - Credit/Debit Cards
+  - VNPay (Vietnam Payment Solution)
+  - Cash on Delivery (COD)
+
+### Administration System
+
+- **Dashboard Overview**: At-a-glance business metrics and performance indicators
+- **Product Management**: Add, edit, and remove products with attribute management
+- **Order Processing**: Review, update status, and manage fulfillment
+- **User Management**: Monitor user accounts and activity
+- **Content Management**: Blog posts, banners, and promotional content
+- **Analytics & Reports**: Sales reports, user behavior analysis, and performance tracking
+
+## 🔧 Technical Architecture
+
+ShopALot is built using a modern tech stack:
+
+- **Frontend**: HTML5, CSS3, JavaScript, jQuery, Bootstrap
+- **Backend**: PHP Laravel Framework
+- **Database**: MySQL
+- **AI Components**:
+  - Python Flask API for chatbot functionality
+  - Machine learning models for recommendation system
+- **Payment Integration**: RESTful API connections to payment gateways
+- **Security**: CSRF protection, data encryption, secure authentication
+
+## 📸 Screenshots
+
+<div align="center">
+  <img src="screenshots/homepage.png" alt="Homepage" width="45%">
+  <img src="screenshots/product-page.png" alt="Product Page" width="45%">
+  <br>
+  <img src="screenshots/ai-chatbot.png" alt="AI Chatbot" width="45%">
+  <img src="screenshots/admin-dashboard.png" alt="Admin Dashboard" width="45%">
+</div>
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- PHP 7.4 or higher
+- Composer
+- Node.js and npm
+- MySQL
+- Python 3.8+ (for AI components)
+
+### Installation
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/shopalot.git
+   cd shopalot
+   ```
+
+2. Install PHP dependencies
+   ```bash
+   composer install
+   ```
+
+3. Install JavaScript dependencies
+   ```bash
+   npm install
+   ```
+
+4. Create environment file
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Generate application key
+   ```bash
+   php artisan key:generate
+   ```
+
+6. Configure database connection in `.env`
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=shopalot
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+7. Run migrations and seed the database
+   ```bash
+   php artisan migrate --seed
+   ```
+
+8. Install Python dependencies (for AI components)
+   ```bash
+   cd python-api
+   pip install -r requirements.txt
+   ```
+
+9. Start the Laravel development server
+   ```bash
+   php artisan serve
+   ```
+
+10. Start the Python Flask API (in a separate terminal)
+    ```bash
+    cd python-api
+    python app.py
+    ```
+
+### Admin Access
+
+- Admin Dashboard: `http://localhost:8000/admin`
+- Default Credentials:
+  - Email: admin@shopalot.com
+  - Password: admin123
+
+## 🔍 Future Developments
+
+- Mobile application with integrated AI features
+- Advanced analytics dashboard
+- Voice search functionality
+- AR product visualization
+- Enhanced personalization using deep learning
+- Multi-language support
+
+## 👨‍💻 Author
+
+**Nguyen Dang Bao**
+- GitHub: [github.com/yourusername](https://github.com/yourusername)
+- Email: brendanbao12@gmail.com
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  © 2023 ShopALot. All Rights Reserved.
+</div>
