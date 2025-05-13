@@ -6,15 +6,36 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\RecommendationController;
 use App\Http\Controllers\Front\ChatboxController;
+use App\Http\Controllers\Front\BlogDetailController;
+use App\Http\Controllers\Front\FaqController;
+use App\Http\Controllers\Front\ContactController;
 
 //front User
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
+Route::get('/', function () {
+    return view('front.index');
+})->name('home');
 Route::get('/get-current-user', [ChatboxController::class, 'getCurrentUser']);
 Route::get('/get-chat-history', [ChatboxController::class, 'getChatHistory'])->middleware('auth');
 Route::post('/ask', [ChatboxController::class, 'askQuestion'])->name('chatbox.ask');
+
+// Ưu tiên route danh sách blog đứng trước
+// Route danh sách blog
 Route::prefix('blog')->group(function () {
+    // Blog listing route
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-    Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+    // Blog detail route - now accepts either ID or a title-based parameter
+    Route::get('/{param}', [BlogController::class, 'show'])->name('blog.detail');
 });
+Route::get('/blog-detail', [BlogController::class, 'index'])->name('blog.detail.index');
+Route::get('/blog-detail/{param}', [BlogDetailController::class, 'show'])->name('blog.detail.show');
+
+
+
+
+
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'index']
 );
 Route::prefix('shop')->group(function () {
