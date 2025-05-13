@@ -7,4 +7,6 @@ use App\Services\ServiceInterface;
 interface BlogServiceInterface extends ServiceInterface
 {
     public function getLatestBLogs($limit=3);
+    public function findBySlug($slug);
+
 }
