@@ -138,9 +138,9 @@ ShopALot is built using a modern tech stack:
 - GitHub: [github.com/NguyenDangBao](https://github.com/NguyenDangBao)
 - Email: brendanbao12@gmail.com
 
-## 📄 License
+## extra feature
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Chatbots: https://github.com/NguyenDangBao/Chatbox
 
 ---
 
