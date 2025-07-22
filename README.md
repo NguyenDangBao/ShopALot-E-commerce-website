@@ -121,7 +121,7 @@ ShopALot is built using a modern tech stack:
 - Admin Dashboard: `http://localhost:8000/admin`
 - Default Credentials:
   - Email: admin@gmail.com
-  - Password: admin123
+  - Password: 123456
 
 ## 🔍 Future Developments
 
